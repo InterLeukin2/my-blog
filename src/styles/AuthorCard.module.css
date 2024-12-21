@@ -1,0 +1,48 @@
+.card {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  background-color: var(--card-bg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.avatar {
+  margin: 0 auto 1.5rem;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+}
+
+.name {
+  margin: 1rem 0;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+}
+
+.bio {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin: 1.5rem 0;
+  font-size: 1.1rem;
+}
+
+.social {
+  margin-top: 1.5rem;
+}
+
+.social a {
+  color: var(--link-color);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  transition: all 0.3s ease;
+}
+
+.social a:hover {
+  background-color: var(--link-color);
+  color: white;
+} 
