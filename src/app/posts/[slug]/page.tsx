@@ -15,12 +15,13 @@ export async function generateMetadata({ params }: PageProps) {
   }
 }
 
+// 生成静态路径
 export async function generateStaticParams() {
-  const posts = await fetchPosts()
+  const posts = await fetchPosts()  // 获取文章列表
   return posts
     .filter((post) => post.published)  // 只包含已发布的文章
     .map((post) => ({
-      slug: post.slug,
+      params: { slug: post.slug },  // 必须包含 params 字段
     }))
 }
 
@@ -43,11 +44,12 @@ export default async function PostPage({ params }: PageProps) {
 }
 
 async function fetchPosts() {
+  // 模拟获取文章列表
   const posts = [
     { slug: 'first-post', published: true },
     { slug: 'second-post', published: true },
     { slug: 'MRO', published: true },
-    { slug: 'template', published: false },
+    { slug: 'template', published: false },  // 假设这是一个未发布的文章
   ]
   return posts
 }
