@@ -1,7 +1,18 @@
+'use client'
+
 import Image from 'next/image'
 import styles from '@/styles/AuthorCard.module.css'
 
 export default function AuthorCard() {
+  // 获取当前时间
+  const lastUpdated = new Date().toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  })
+
   return (
     <div className={styles.card}>
       <div className={styles.avatar}>
@@ -13,13 +24,25 @@ export default function AuthorCard() {
           priority
         />
       </div>
-      <h3 className={styles.name}>jing</h3>
-      <p className={styles.bio}>个人简介：热爱技术，热爱分享，致力于成为一名优秀的开发者和算法工程师.</p>
+      <h3 className={styles.name}>董静</h3>
+      <p className={styles.bio}>
+        前端开发工程师 / 技术博主
+        <br />
+        热爱编程，热爱分享
+      </p>
+      <div className={styles.meta}>
+        <p className={styles.updateTime}>
+          最后更新：{lastUpdated}
+        </p>
+      </div>
       <div className={styles.social}>
-        <a href="https://github.com/interleukin2" target="_blank" rel="noopener noreferrer">
+        <a 
+          href="https://github.com/你的GitHub用户名" 
+          target="_blank" 
+          rel="noopener noreferrer"
+        >
           GitHub
         </a>
-        {/* 添加其他社交链接 */}
       </div>
     </div>
   )
