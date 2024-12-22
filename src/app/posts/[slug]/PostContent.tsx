@@ -7,17 +7,14 @@ import styles from './post.module.css'
 
 const POSTS_DIR = join(process.cwd(), 'src', 'posts')
 
-interface ImageProps {
-  src: string
-  alt?: string
-  width?: number
-  height?: number
-  [key: string]: any
+interface ImageProps extends React.ComponentPropsWithoutRef<typeof Image> {
+  src: string;
+  alt?: string;
 }
 
 interface CodeProps {
-  children: React.ReactNode
-  className?: string
+  children: React.ReactNode;
+  className?: string;
 }
 
 const components = {
