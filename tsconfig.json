@@ -17,18 +17,19 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "baseUrl": ".", // 添加 baseUrl 配置
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ] // 配置路径别名
+    },
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
     "plugins": [
       {
         "name": "next"
       }
-    ],
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    },
-    "typeRoots": [
-      "./node_modules/@types"
     ]
   },
   "include": [
