@@ -1,17 +1,24 @@
-import { Metadata } from 'next'
-import PostList from './PostList'
-import styles from './page.module.css'
+import { notFound } from 'next/navigation'
+import PostContent from './PostContent'
+import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: '博客文章',
-  description: '所有博客文章列表',
+type PageProps = {
+  params: { slug: string }
 }
 
-export default function PostsPage() {
-  return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>博客文章</h1>
-      <PostList />
-    </div>
-  )
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const resolvedParams = await Promise.resolve(params)
+  return {
+    title: `Post - ${resolvedParams.slug}`,
+  }
+}
+
+export default async function PostPage({ params }: PageProps) {
+  const resolvedParams = await Promise.resolve(params)
+  
+  if (resolvedParams.slug === 'template') {
+    notFound()
+  }
+  
+  return <PostContent slug={resolvedParams.slug} />
 }
