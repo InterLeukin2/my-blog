@@ -1,5 +1,5 @@
 import styles from './page.module.css'
-import PostList from '@/app/posts/postList'
+//import PostList from '@/app/posts/postList'
 import Image from 'next/image'
 import { siteConfig } from '@/config/site'
 import ThemeToggle from '@/components/ThemeToggle'
