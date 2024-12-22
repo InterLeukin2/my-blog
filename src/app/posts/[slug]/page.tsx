@@ -3,22 +3,20 @@ import PostContent from './PostContent'
 import { Metadata } from 'next'
 
 interface PageProps {
-  params: Promise<{ slug: string }> | { slug: string }
+  params: { slug: string }
+  searchParams?: { [key: string]: string | string[] | undefined }
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const resolvedParams = await Promise.resolve(params)
   return {
-    title: `Post - ${resolvedParams.slug}`,
+    title: `Post - ${params.slug}`,
   }
 }
 
-export default async function PostPage({ params }: PageProps) {
-  const resolvedParams = await Promise.resolve(params)
-  
-  if (resolvedParams.slug === 'template') {
+export default function PostPage({ params }: PageProps) {
+  if (params.slug === 'template') {
     notFound()
   }
   
-  return <PostContent slug={resolvedParams.slug} />
+  return <PostContent slug={params.slug} />
 } 
