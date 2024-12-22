@@ -21,6 +21,7 @@
   margin: 1rem 0;
   font-size: 1.5rem;
   color: var(--text-primary);
+  font-weight: bold;
 }
 
 .bio {
@@ -45,4 +46,16 @@
 .social a:hover {
   background-color: var(--link-color);
   color: white;
-} 
+}
+
+.meta {
+  margin: 1rem 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.updateTime {
+  margin: 0.5rem 0;
+  font-style: italic;
+}
+  

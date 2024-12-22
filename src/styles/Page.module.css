@@ -1,0 +1,42 @@
+.container {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+}
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 2rem;
+}
+
+.profile {
+  position: sticky;
+  top: 2rem;
+  height: fit-content;
+}
+
+.content {
+  min-width: 0;
+}
+
+/* 响应式布局 */
+@media (max-width: 1024px) {
+  .main {
+    grid-template-columns: 300px 1fr;
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    grid-template-columns: 1fr;
+    padding: 1.5rem 1rem;
+  }
+
+  .profile {
+    position: static;
+  }
+} 

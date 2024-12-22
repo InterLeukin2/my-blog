@@ -1,10 +1,5 @@
-import { ThemeProvider } from '@/context/ThemeContext'
-import '@/styles/globals.css'
-
-export const metadata = {
-  title: 'IL-42',
-  description: 'have a good day',
-}
+import './globals.css'
+import SiteTitle from '@/components/SiteTitle'
 
 export default function RootLayout({
   children,
@@ -12,11 +7,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="zh">
-      <body suppressHydrationWarning>
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+    <html lang="en">
+      <body>
+        <SiteTitle />
+        {children}
       </body>
     </html>
   )

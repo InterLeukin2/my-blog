@@ -4,7 +4,6 @@ import Image from 'next/image'
 import styles from '@/styles/AuthorCard.module.css'
 
 export default function AuthorCard() {
-  // 获取当前时间
   const lastUpdated = new Date().toLocaleDateString('zh-CN', {
     year: 'numeric',
     month: 'long',
@@ -24,11 +23,9 @@ export default function AuthorCard() {
           priority
         />
       </div>
-      <h3 className={styles.name}>董静</h3>
+      <h3 className={styles.name}>Jing</h3>
       <p className={styles.bio}>
-        前端开发工程师 / 技术博主
-        <br />
-        热爱编程，热爱分享
+        致力于探索 AI 与全栈开发
       </p>
       <div className={styles.meta}>
         <p className={styles.updateTime}>
@@ -37,7 +34,7 @@ export default function AuthorCard() {
       </div>
       <div className={styles.social}>
         <a 
-          href="https://github.com/你的GitHub用户名" 
+          href="https://github.com/interleukin2" 
           target="_blank" 
           rel="noopener noreferrer"
         >
