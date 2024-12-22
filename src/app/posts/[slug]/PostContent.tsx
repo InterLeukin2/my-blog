@@ -2,23 +2,27 @@ import { readFileSync } from 'fs'
 import { join } from 'path'
 import matter from 'gray-matter'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import Image from 'next/image'
+import Image, { ImageProps as NextImageProps } from 'next/image'
 import styles from './post.module.css'
+import { siteConfig } from '@/config/site'
 
 const POSTS_DIR = join(process.cwd(), 'src', 'posts')
 
-interface ImageProps extends React.ComponentPropsWithoutRef<typeof Image> {
+// 扩展 Next.js Image 组件的类型
+interface CustomImageProps extends Omit<NextImageProps, 'src'> {
   src: string;
   alt?: string;
 }
 
-interface CodeProps {
+// MDX 代码块的类型
+interface CodeBlockProps {
   children: React.ReactNode;
   className?: string;
+  [key: string]: unknown;
 }
 
 const components = {
-  img: ({ src, alt, ...props }: ImageProps) => {
+  img: ({ src, alt, ...props }: CustomImageProps) => {
     const imageSrc = src.startsWith('/') ? src : `/images/${src}`
     
     return (
@@ -41,12 +45,12 @@ const components = {
       </div>
     )
   },
-  pre: ({ children, ...props }: CodeProps) => (
+  pre: ({ children, ...props }: CodeBlockProps) => (
     <pre className={styles.codeBlock} {...props}>
       {children}
     </pre>
   ),
-  code: ({ children, ...props }: CodeProps) => (
+  code: ({ children, ...props }: CodeBlockProps) => (
     <code className={styles.inlineCode} {...props}>
       {children}
     </code>
