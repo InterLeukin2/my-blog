@@ -2,18 +2,21 @@ import { notFound } from 'next/navigation'
 import PostContent from './PostContent'
 import { Metadata } from 'next'
 
-interface PageProps {
+export async function generateMetadata({
+  params,
+}: {
   params: { slug: string }
-  searchParams?: { [key: string]: string | string[] | undefined }
-}
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+}): Promise<Metadata> {
   return {
     title: `Post - ${params.slug}`,
   }
 }
 
-export default function PostPage({ params }: PageProps) {
+export default async function PostPage({
+  params,
+}: {
+  params: { slug: string }
+}) {
   if (params.slug === 'template') {
     notFound()
   }
