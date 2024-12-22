@@ -5,11 +5,12 @@ import { Metadata } from 'next'
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-interface Props {
+// 使用 Next.js 的内置类型
+type Props = {
   params: { slug: string }
+  searchParams: { [key: string]: string | string[] | undefined }
 }
 
-// 添加元数据生成函数
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `Post - ${params.slug}`,
@@ -17,7 +18,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 // 页面组件
-export default function PostPage({ params }: Props) {
+export default function PostPage(props: Props) {
+  const { params } = props
+  
   if (params.slug === 'template') {
     notFound()
   }
