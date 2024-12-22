@@ -4,12 +4,24 @@ import matter from 'gray-matter'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import Image from 'next/image'
 import styles from './post.module.css'
-import { siteConfig } from '@/config/site'
 
 const POSTS_DIR = join(process.cwd(), 'src', 'posts')
 
+interface ImageProps {
+  src: string
+  alt?: string
+  width?: number
+  height?: number
+  [key: string]: any
+}
+
+interface CodeProps {
+  children: React.ReactNode
+  className?: string
+}
+
 const components = {
-  img: ({ src, alt, ...props }: any) => {
+  img: ({ src, alt, ...props }: ImageProps) => {
     const imageSrc = src.startsWith('/') ? src : `/images/${src}`
     
     return (
@@ -32,11 +44,15 @@ const components = {
       </div>
     )
   },
-  pre: (props: any) => (
-    <pre className={styles.codeBlock} {...props} />
+  pre: ({ children, ...props }: CodeProps) => (
+    <pre className={styles.codeBlock} {...props}>
+      {children}
+    </pre>
   ),
-  code: (props: any) => (
-    <code className={styles.inlineCode} {...props} />
+  code: ({ children, ...props }: CodeProps) => (
+    <code className={styles.inlineCode} {...props}>
+      {children}
+    </code>
   )
 }
 
