@@ -2,34 +2,36 @@ import { readFileSync } from 'fs'
 import { join } from 'path'
 import matter from 'gray-matter'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import Image, { ImageProps as NextImageProps } from 'next/image'
+import Image from 'next/image'
 import styles from './post.module.css'
 import { siteConfig } from '@/config/site'
 
 const POSTS_DIR = join(process.cwd(), 'src', 'posts')
 
-// 扩展 Next.js Image 组件的类型
-interface CustomImageProps extends Omit<NextImageProps, 'src'> {
-  src: string;
-  alt?: string;
+// 自定义图片组件的属性类型
+interface CustomImageProps {
+  src: string
+  alt: string
+  width?: number
+  height?: number
+  className?: string
+  priority?: boolean
+  style?: React.CSSProperties
 }
 
-// MDX 代码块的类型
 interface CodeBlockProps {
-  children: React.ReactNode;
-  className?: string;
-  [key: string]: unknown;
+  children: React.ReactNode
+  className?: string
 }
 
 const components = {
-  img: ({ src, alt, ...props }: CustomImageProps) => {
+  img: ({ src, alt = '', ...props }: CustomImageProps) => {
     const imageSrc = src.startsWith('/') ? src : `/images/${src}`
-    
     return (
       <div className={styles.imageWrapper}>
         <Image
           src={imageSrc}
-          alt={alt || ''}
+          alt={alt}
           width={800}
           height={400}
           priority
@@ -57,7 +59,7 @@ const components = {
   )
 }
 
-async function getPost(slug: string) {
+export default async function PostContent({ slug }: { slug: string }) {
   try {
     const fullPath = join(POSTS_DIR, `${slug}.mdx`)
     const fileContents = readFileSync(fullPath, 'utf8')
@@ -67,49 +69,33 @@ async function getPost(slug: string) {
       return null
     }
     
-    return {
-      title: data.title || slug,
-      date: data.date || new Date().toISOString(),
-      author: siteConfig.author,
-      content,
-      published: data.published || false,
-    }
+    return (
+      <article className={styles.article}>
+        <h1 className={styles.title}>{data.title || slug}</h1>
+        <div className={styles.metadata}>
+          <time className={styles.date}>
+            {new Date(data.date || new Date()).toLocaleDateString('zh-CN')}
+          </time>
+          <span className={styles.author}>作者：{siteConfig.author}</span>
+        </div>
+        <div className={styles.content}>
+          <MDXRemote 
+            source={content} 
+            components={components}
+            options={{
+              parseFrontmatter: true,
+              mdxOptions: {
+                format: 'mdx',
+                remarkPlugins: [],
+                rehypePlugins: [],
+              }
+            }}
+          />
+        </div>
+      </article>
+    )
   } catch (error) {
     console.error(`Error reading post ${slug}:`, error)
     return null
   }
-}
-
-export default async function PostContent({ slug }: { slug: string }) {
-  const post = await getPost(slug)
-  
-  if (!post) {
-    return null
-  }
-
-  return (
-    <article className={styles.article}>
-      <h1 className={styles.title}>{post.title}</h1>
-      <div className={styles.metadata}>
-        <time className={styles.date}>
-          {new Date(post.date).toLocaleDateString('zh-CN')}
-        </time>
-        <span className={styles.author}>作者：{post.author}</span>
-      </div>
-      <div className={styles.content}>
-        <MDXRemote 
-          source={post.content} 
-          components={components}
-          options={{
-            parseFrontmatter: true,
-            mdxOptions: {
-              format: 'mdx',
-              remarkPlugins: [],
-              rehypePlugins: [],
-            }
-          }}
-        />
-      </div>
-    </article>
-  )
 } 
