@@ -9,13 +9,12 @@ type Params = {
 // 定义页面属性类型
 type Props = {
   params: Params;
-  searchParams: { [key: string]: string | string[] | undefined };
 }
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-export default async function PostPage({ params, searchParams }: Props) {
+export default async function PostPage({ params }: Props) {
   if (params.slug === 'template') {
     notFound()
   }
