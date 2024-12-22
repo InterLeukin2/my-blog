@@ -6,10 +6,8 @@ const config = {
     },
     basePath: process.env.NODE_ENV === 'production' ? '/my-blog' : '',
     experimental: {
-      turbo: { 
-        enabled: true,  // 启用 Turbopack
-      },
+      turbo: {}, // 设置为对象而不是布尔值
     },
   }
   
-  module.exports = config;
+  module.exports = config
