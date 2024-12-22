@@ -13,11 +13,12 @@
     "@mdx-js/react": "^3.1.0",
     "@next/mdx": "^15.1.2",
     "gray-matter": "^4.0.3",
-    "next": "latest",
+    "next": "^15.1.2",
     "next-mdx-remote": "latest"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/css-modules": "^1.0.5",
     "@types/next": "^8.0.7",
     "@types/node": "^20",
     "@types/react": "^19",

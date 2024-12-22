@@ -1,36 +1,28 @@
+/* posts.module.css */
 .posts {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  padding: 2rem 0;
-}
-
-.post {
-  padding: 1.5rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  transition: all 0.2s ease;
-  text-decoration: none;
-  color: var(--text);
-}
-
-.post:hover {
-  background: var(--hover);
-  transform: translateY(-2px);
-}
-
-.post h2 {
-  margin: 0 0 0.5rem;
-  font-size: 1.5rem;
-}
-
-.post time {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-}
-
-.post p {
-  margin: 1rem 0 0;
-  color: var(--text-secondary);
-  line-height: 1.5;
-} 
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .post {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-decoration: none;
+    background-color: white;
+  }
+  
+  .post:hover {
+    background-color: #f7f7f7;
+  }
+  
+  .post h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .post time {
+    color: gray;
+    font-size: 0.9rem;
+  }
