@@ -5,7 +5,7 @@ import styles from '@/styles/AuthorCard.module.css'
 
 export default function AuthorCard() {
   // 获取当前时间
-  const lastUpdated = new Date().toLocaleDateString('zh-CN', {
+  const lastUpdated = new Date().toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -24,20 +24,20 @@ export default function AuthorCard() {
           priority
         />
       </div>
-      <h3 className={styles.name}>董静</h3>
+      <h3 className={styles.name}>jing</h3>
       <p className={styles.bio}>
-        前端开发工程师 / 技术博主
+        until Penguin happy
         <br />
-        热爱编程，热爱分享
+        Dedicated to exploring AI and full-stack development.
       </p>
       <div className={styles.meta}>
         <p className={styles.updateTime}>
-          最后更新：{lastUpdated}
+          last updated：{lastUpdated}
         </p>
       </div>
       <div className={styles.social}>
         <a 
-          href="https://github.com/你的GitHub用户名" 
+          href="https://github.com/interleukin2" 
           target="_blank" 
           rel="noopener noreferrer"
         >

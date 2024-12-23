@@ -1,0 +1,115 @@
+---
+title: "MRO和函数调用栈"
+date: "2024-12-20"
+draft: false
+
+---
+
+# MRO？函数调用栈？
+
+总结：
+- MRO 主要用于多继承的类方法查找顺序，帮助 Python 确定在多层继承中，应该优先调用哪个父类的函数。
+- 函数调用栈 主要用于管理函数的调用过程，跟踪递归调用、局部变量等。
+
+*其实没什么关系只是我刚好遇到了而已*
+
+## MRO
+
+MRO (Method Resolution Order) 是 Python 中与多重继承相关的一个概念，它决定了方法调用的顺序，尤其是在涉及多重继承时，Python 需要知道在继承体系中应该调用哪个类的方法。
+
+举例：
+
+```python
+class A:
+    def greet(self):
+        print("Hello from class A")
+
+class B(A):
+    def greet(self):
+        print("Hello from class B")
+
+class C(A):
+    def greet(self):
+        print("Hello from class C")
+
+class D(B, C):
+    pass
+
+class E(D, A):
+    pass
+
+d = E()
+d.greet()  # 输出什么？
+print(E.__mro__)
+```
+
+输出：
+
+```python
+Hello from class A
+(<class '__main__.E'>, <class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>)
+```
+
+原因是：v
+- 在 Python 中，MRO 是基于 C3 线性化算法计算的，它确保了在多重继承的情况下，方法调用的顺序是唯一的，并且符合预期的继承关系。
+- 在上述代码中，E 类继承自 D 和 A，而 D 继承自 B 和 C。因此，E 的 MRO 顺序是 E -> D -> B -> C -> A -> object。
+- 当调用 d.greet() 时，Python 会按照 MRO 的顺序依次查找方法，最终找到 A 类中的 greet 方法。
+
+ 什么是C3 线性化算法？
+
+- Python创始人Guido van Rossum这样总结C3超类线性化：“基本上，在C3背后的想法是，如果你写下在复杂的类层级中继承关系所施加的所有次序规则，这个算法将确定出满足所有这些规则的这些类的一个单调次序。如果不能确定出这样的次序，这个算法会失败。”
+
+![C3线性化算法](/images/Screenshot_2024-12-22_at_19.33.32.png)
+
+## **函数调用栈**
+
+1.函数调用栈（Call Stack）是计算机程序运行时用来管理函数调用的内存结构。它是一个数据结构，通常采用栈（LIFO：后进先出）的方式组织，负责追踪当前程序的执行状态。每当一个函数被调用时，程序会将该函数的相关信息（例如：返回地址、局部变量等）推入栈中，并在函数执行完毕后将其从栈中弹出，返回到函数调用之前的状态。
+2. 调用栈的工作原理
+调用栈是一个 “后进先出”（LIFO, Last In First Out）结构，遵循以下原则：
+1.	函数被调用时：
+-   系统将当前函数执行位置和状态保存到栈中。
+-   转到被调用函数，执行它的代码。
+2.	函数返回时：
+-   弹出栈顶的函数调用信息。
+-   恢复到调用它的位置，并继续执行后续代码。
+
+以二叉树中序遍历举例：
+
+```python
+class Solution:
+    def inorderTraversal(self, root: TreeNode) -> list[int]:
+        def dfs(node):
+            if not node:
+                return
+            dfs(node.left)        # Step 1: Traverse left subtree
+            result.append(node.val)  # Step 2: Visit the root node
+            dfs(node.right)       # Step 3: Traverse right subtree
+
+```
+
+在dfs(node.left) 彻底执行完毕后，才会执行dfs(node.right)，
+举例说明：
+输入：
+```python
+[root = [1, 2, 3, 4, 5, 6, 7]]
+```
+中序遍历结果：
+```python
+[4, 2, 5, 1, 6, 3, 7]
+```
+每次调用栈的状态如下：
+```python
+Step 1: dfs(1)
+Step 2: dfs(1), dfs(2)
+Step 3: dfs(1), dfs(2), dfs(4)
+Step 4: dfs(1), dfs(2) (after returning from dfs(4.left))
+Step 5: dfs(1), dfs(2), dfs(5)
+Step 6: dfs(1), dfs(3)
+Step 7: dfs(1) (after completing dfs(3))
+```
+
+
+- 用pdb调试可以查看函数调用栈
+
+
+
